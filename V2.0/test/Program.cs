@@ -10,11 +10,11 @@ class Program
 	{
 		public static void Main(string[] args)
 		{
-			API test = new mailinblue.API("<access key>");
+			var test = new SendinBlueApi("<access key>");
             Dictionary<string, int> data = new Dictionary<string, int>();
             data.Add("page", 1);
             data.Add("page_limit", 3);
-            Object getProcesses = test.get_processes(data);
+            var getProcesses = test.GetProcesses(data);
             Console.WriteLine(getProcesses);
 			Console.ReadKey(true);
 		}
