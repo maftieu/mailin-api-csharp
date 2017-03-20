@@ -30,11 +30,12 @@ namespace mailinblue
             _timeout = timeout;
         }
 
+        #region Account
+
         /*
             Get SMTP details.
             No input required
         */
-
         public async Task<JObject> GetAccount()
         {
             return await GetRequestAsync("account").ConfigureAwait(false);
@@ -44,7 +45,6 @@ namespace mailinblue
             Get SMTP details.
             No input required
         */
-
         public async Task<JObject> GetSmtpDetails()
         {
             return await GetRequestAsync("account/smtpdetail").ConfigureAwait(false);
@@ -55,7 +55,6 @@ namespace mailinblue
             @param {Object} data contains dynamic object with a collection of keys and values from Dictionary.
             @options data {String} auth_key: 16 character authorization key of Reseller child. Example : To get the details of more than one child account, use, {"key1":"abC01De2fGHI3jkL","key2":"mnO45Pq6rSTU7vWX"} [Mandatory]
         */
-
         public async Task<JObject> GetResellerChild(object data)
         {
             return await PostRequestAsync("account/getchildv2", JsonConvert.SerializeObject(data)).ConfigureAwait(false);
@@ -72,7 +71,6 @@ namespace mailinblue
                 - email_credit {Integer} number of email credits
                 - sms_credit {Integer} Number of sms credts
         */
-
         public async Task<JObject> AddRemoveChildCredits(object data)
         {
             return await PostRequestAsync("account/addrmvcredit", JsonConvert.SerializeObject(data)).ConfigureAwait(false);
@@ -83,7 +81,6 @@ namespace mailinblue
             @param {Object} data contains dynamic object with a collection of keys and values from Dictionary.
             @options data {String} auth_key: 16 character authorization key of Reseller child to be deleted [Mandatory]
         */
-
         public async Task<JObject> DeleteChildAccount(Dictionary<string, string> data)
         {
             var childAuthkey = data["auth_key"];
@@ -103,7 +100,6 @@ namespace mailinblue
                 - sms_credit {Integer} Number of sms credts
             @options data {Array} associate_ip: Associate dedicated IPs to reseller child. You can use commas to separate multiple IPs [Optional]
         */
-
         public async Task<JObject> CreateChildAccount(object data)
         {
             return await PostRequestAsync("account", JsonConvert.SerializeObject(data)).ConfigureAwait(false);
@@ -120,11 +116,14 @@ namespace mailinblue
             @options data {Array} associate_ip: Associate dedicated IPs to reseller child. You can use commas to separate multiple IPs [Optional]
             @options data {Array} disassociate_ip: Disassociate dedicated IPs from reseller child. You can use commas to separate multiple IPs [Optional]
         */
-
         public async Task<JObject> UpdateChildAccount(object data)
         {
             return await PostRequestAsync("account", JsonConvert.SerializeObject(data)).ConfigureAwait(false);
         }
+
+        #endregion // Account
+
+        #region Campaign
 
         /*
             Get all campaigns detail.
@@ -134,7 +133,6 @@ namespace mailinblue
             @options data {Integer} page: Maximum number of records per request is 500, if there are more than 500 campaigns then you can use this parameter to get next 500 results [Optional]
             @options data {Integer} page_limit: This should be a valid number between 1-1000. If page limit is kept empty or >1000, default is 500 [Optional]
         */
-
         public async Task<JObject> GetCampaignsV2(Dictionary<string, object> data)
         {
             var type = data["type"].ToString();
@@ -158,7 +156,6 @@ namespace mailinblue
             @param {Object} data contains dynamic object with a collection of keys and values from Dictionary.
             @options data {Integer} id: Unique Id of the campaign [Mandatory]
         */
-
         public async Task<JObject> GetCampaignV2(Dictionary<string, int> data)
         {
             var id = data["id"].ToString();
@@ -186,7 +183,6 @@ namespace mailinblue
             @options data {Integer} mirror_active: Status of mirror links in campaign. Possible values = 0 & 1 (default). mirror_active = 0 means mirror links are deactivated, & mirror_active = 1 means mirror links are activated, in the campaign [Optional]
             @options data {Integer} send_now: Flag to send campaign now. Possible values = 0 (default) & 1. send_now = 0 means campaign can’t be send now, & send_now = 1 means campaign ready to send now [Optional]
         */
-
         public async Task<JObject> CreateCampaign(object data)
         {
             return await PostRequestAsync("campaign", JsonConvert.SerializeObject(data)).ConfigureAwait(false);
@@ -197,7 +193,6 @@ namespace mailinblue
             @param {Object} data contains dynamic object with a collection of keys and values from Dictionary.
             @options data {Integer} id: Id of campaign to be deleted [Mandatory]
         */
-
         public async Task<JObject> DeleteCampaign(Dictionary<string, int> data)
         {
             var id = data["id"].ToString();
@@ -226,7 +221,6 @@ namespace mailinblue
             @options data {Integer} mirror_active: Status of mirror links in campaign. Possible values = 0 & 1 (default). mirror_active = 0 means mirror links are deactivated, & mirror_active = 1 means mirror links are activated, in the campaign [Optional]
             @options data {Integer} send_now: Flag to send campaign now. Possible values = 0 (default) & 1. send_now = 0 means campaign can’t be send now, & send_now = 1 means campaign ready to send now [Optional]
         */
-
         public async Task<JObject> UpdateCampaign(Dictionary<string, object> data)
         {
             var id = data["id"].ToString();
@@ -245,7 +239,6 @@ namespace mailinblue
             @options data {Array} email_cc: Same as email_to but for Cc [Optional]
             @options data {String} email_body: Body of the message [Mandatory]
         */
-
         public async Task<JObject> CampaignReportEmail(Dictionary<string, object> data)
         {
             var id = data["id"].ToString();
@@ -259,7 +252,6 @@ namespace mailinblue
             @options data {String} notify_url: URL that will be called once the export process is finished [Mandatory]
             @options data {String} type: Type of recipients. Possible values – all, non_clicker, non_opener, clicker, opener, soft_bounces, hard_bounces & unsubscribes [Mandatory]
         */
-
         public async Task<JObject> CampaignRecipientsExport(Dictionary<string, object> data)
         {
             var id = data["id"].ToString();
@@ -272,7 +264,6 @@ namespace mailinblue
             @options data {Integer} id: Id of the campaign [Mandatory]
             @options data {Array} emails: Email address of recipient(s) existing in the one of the lists & should not be blacklisted. Example: "test@example.net". You can use commas to separate multiple recipients [Mandatory]
         */
-
         public async Task<JObject> SendBatEmail(Dictionary<string, object> data)
         {
             var id = data["id"].ToString();
@@ -301,7 +292,6 @@ namespace mailinblue
             @options data {Integer} mirror_active: Status of mirror links in campaign. Possible values = 0 & 1 (default). mirror_active = 0 means mirror links are deactivated, & mirror_active = 1 means mirror links are activated, in the campaign [Optional]
             @options data {Integer} send_now: Flag to send campaign now. Possible values = 0 (default) & 1. send_now = 0 means campaign can’t be send now, & send_now = 1 means campaign ready to send now [Optional]
         */
-
         public async Task<JObject> CreateTriggerCampaign(object data)
         {
             return await PostRequestAsync("campaign", JsonConvert.SerializeObject(data)).ConfigureAwait(false);
@@ -330,7 +320,6 @@ namespace mailinblue
             @options data {Integer} mirror_active: Status of mirror links in campaign. Possible values = 0 & 1 (default). mirror_active = 0 means mirror links are deactivated, & mirror_active = 1 means mirror links are activated, in the campaign [Optional]
             @options data {Integer} send_now: Flag to send campaign now. Possible values = 0 (default) & 1. send_now = 0 means campaign can’t be send now, & send_now = 1 means campaign ready to send now [Optional]
         */
-
         public async Task<JObject> UpdateTriggerCampaign(Dictionary<string, object> data)
         {
             var id = data["id"].ToString();
@@ -342,7 +331,6 @@ namespace mailinblue
             @param {Object} data contains dynamic object with a collection of keys and values from Dictionary.
             @options data {Array} camp_ids: Id of campaign to get share link. You can use commas to separate multiple ids [Mandatory]
         */
-
         public async Task<JObject> ShareCampaign(object data)
         {
             return await PostRequestAsync("campaign/sharelinkv2", JsonConvert.SerializeObject(data)).ConfigureAwait(false);
@@ -354,12 +342,15 @@ namespace mailinblue
             @options data {Integer} id: Id of campaign to update its status [Mandatory]
             @options data {String} status: Types of status. Possible values – suspended, archive, darchive, sent, queued, replicate and replicate_template ( case sensitive ) [Mandatory]
         */
-
         public async Task<JObject> UpdateCampaignStatus(Dictionary<string, object> data)
         {
             var id = data["id"].ToString();
             return await PutRequestAsync("campaign/" + id + "/updatecampstatus", JsonConvert.SerializeObject(data)).ConfigureAwait(false);
         }
+
+        #endregion // Campaign
+
+        #region Campaign > Process
 
         /*
             Get all the processes information under the account.
@@ -367,7 +358,6 @@ namespace mailinblue
             @options data {Integer} page: Maximum number of records per request is 50, if there are more than 50 processes then you can use this parameter to get next 50 results [Mandatory]
             @options data {Integer} page_limit: This should be a valid number between 1-50 [Mandatory]
         */
-
         public async Task<JObject> GetProcesses(Dictionary<string, int> data)
         {
             var page = data["page"].ToString();
@@ -381,12 +371,15 @@ namespace mailinblue
             @param {Object} data contains dynamic object with a collection of keys and values from Dictionary.
             @options data {Integer} id: Id of process to get details [Mandatory]
         */
-
         public async Task<JObject> GetProcess(Dictionary<string, int> data)
         {
             var id = data["id"].ToString();
             return await GetRequestAsync("process/" + id).ConfigureAwait(false);
         }
+
+        #endregion // Campaign > Process
+
+        #region Campaign > Lists
 
         /*
             Get all lists detail.
@@ -395,7 +388,6 @@ namespace mailinblue
             @options data {Integer} page: Maximum number of records per request is 50, if there are more than 50 processes then you can use this parameter to get next 50 results [Mandatory]
             @options data {Integer} page_limit: This should be a valid number between 1-50 [Mandatory]
         */
-
         public async Task<JObject> GetLists(Dictionary<string, int> data)
         {
             var listParent = data["list_parent"].ToString();
@@ -410,7 +402,6 @@ namespace mailinblue
             @param {Object} data contains dynamic object with a collection of keys and values from Dictionary.
             @options data {Integer} id: Id of list to get details [Mandatory]
         */
-
         public async Task<JObject> GetList(Dictionary<string, int> data)
         {
             var id = data["id"].ToString();
@@ -423,7 +414,6 @@ namespace mailinblue
             @options data {String} list_name: Desired name of the list to be created [Mandatory]
             @options data {Integer} list_parent: Folder ID [Mandatory]
         */
-
         public async Task<JObject> CreateList(object data)
         {
             return await PostRequestAsync("list", JsonConvert.SerializeObject(data)).ConfigureAwait(false);
@@ -434,7 +424,6 @@ namespace mailinblue
             @param {Object} data contains dynamic object with a collection of keys and values from Dictionary.
             @options data {Integer} id: Id of list to be deleted [Mandatory]
         */
-
         public async Task<JObject> DeleteList(Dictionary<string, int> data)
         {
             var id = data["id"].ToString();
@@ -448,7 +437,6 @@ namespace mailinblue
             @options data {String} list_name: Desired name of the list to be modified [Optional]
             @options data {Integer} list_parent: Folder ID [Mandatory]
         */
-
         public async Task<JObject> UpdateList(Dictionary<string, object> data)
         {
             var id = data["id"].ToString();
@@ -463,12 +451,10 @@ namespace mailinblue
             @options data {Integer} page: Maximum number of records per request is 500, if in your list there are more than 500 users then you can use this parameter to get next 500 results [Optional]
             @options data {Integer} page_limit: This should be a valid number between 1-500 [Optional]
         */
-
         public async Task<JObject> DisplayListUsers(object data)
         {
             return await PutRequestAsync("list/display", JsonConvert.SerializeObject(data)).ConfigureAwait(false);
         }
-
 
         /*
             Add already existing users in the SendinBlue contacts to the list.
@@ -476,7 +462,6 @@ namespace mailinblue
             @options data {Integer} id: Id of list to link users in it [Mandatory]
             @options data {Array} users: Email address of the already existing user(s) in the SendinBlue contacts. Example: "test@example.net". You can use commas to separate multiple users [Mandatory]
         */
-
         public async Task<JObject> AddUsersList(Dictionary<string, object> data)
         {
             var id = data["id"].ToString();
@@ -489,120 +474,21 @@ namespace mailinblue
             @options data {Integer} id: Id of list to unlink users from it [Mandatory]
             @options data {Array} users: Email address of the already existing user(s) in the SendinBlue contacts to be modified. Example: "test@example.net". You can use commas to separate multiple users [Mandatory]
         */
-
         public async Task<JObject> DeleteUsersList(Dictionary<string, object> data)
         {
             var id = data["id"].ToString();
             return await PutRequestAsync("list/" + id + "/delusers", JsonConvert.SerializeObject(data)).ConfigureAwait(false);
         }
 
-        /*
-            Send Transactional Email.
-            @param {Object} data contains dynamic object with a collection of keys and values from Dictionary.
-            @options data {Array} to: Email address of the recipient(s). It should be sent as an associative array. Example: array("to@example.net"=>"to whom"). You can use commas to separate multiple recipients [Mandatory]
-            @options data {String} subject: Message subject [Mandatory]
-            @options data {Array} from Email address for From header. It should be sent as an array. Example: array("from@email.com","from email") [Mandatory]
-            @options data {String} html: Body of the message. (HTML version) [Mandatory]. To send inline images, use <img src="{YourFileName.Extension}" alt="image" border="0" >, the 'src' attribute value inside {} (curly braces) should be same as the filename used in 'inline_image' parameter
-            @options data {String} text: Body of the message. (text version) [Optional]
-            @options data {Array} cc: Same as to but for Cc. Example: array("cc@example.net","cc whom") [Optional]
-            @options data {Array} bcc: Same as to but for Bcc. Example: array("bcc@example.net","bcc whom") [Optional]
-            @options data {Array} replyto: Same as from but for Reply To. Example: array("from@email.com","from email") [Optional]
-            @options data {Array} attachment: Provide the absolute url of the attachment/s. Possible extension values = gif, png, bmp, cgm, jpg, jpeg, txt, css, shtml, html, htm, csv, zip, pdf, xml, doc, xls, ppt, tar and ez. To send attachment/s generated on the fly you have to pass your attachment/s filename & its base64 encoded chunk data as an associative array. Example: array("YourFileName.Extension"=>"Base64EncodedChunkData"). You can use commas to separate multiple attachments [Optional]
-            @options data {Array} headers: The headers will be sent along with the mail headers in original email. Example: array("Content-Type"=>"text/html; charset=iso-8859-1"). You can use commas to separate multiple headers [Optional]
-            @options data {Array} inline_image: Pass your inline image/s filename & its base64 encoded chunk data as an associative array. Possible extension values = gif, png, bmp, cgm, jpg and jpeg. Example: array("YourFileName.Extension"=>"Base64EncodedChunkData"). You can use commas to separate multiple inline images [Optional]
-        */
+        #endregion // Campaign > Lists
 
-        public async Task<JObject> SendEmail(object data)
-        {
-            return await PostRequestAsync("email", JsonConvert.SerializeObject(data)).ConfigureAwait(false);
-        }
-
-        /*
-            To retrieve details of all webhooks.
-            @param {Object} data contains dynamic object with a collection of keys and values from Dictionary.
-            @options data {String} is_plat: Flag to get webhooks. Possible values – 0 & 1. Example: to get Transactional webhooks, use $is_plat=0, to get Marketing webhooks, use $is_plat=1, & to get all webhooks, use $is_plat="" [Optional]
-        */
-
-        public async Task<JObject> GetWebhooks(Dictionary<string, string> data)
-        {
-            var isPlat = data["is_plat"];
-            return await GetRequestAsync("webhook/index/is_plat/" + isPlat).ConfigureAwait(false);
-        }
-
-        /*
-            To retrieve details of any particular webhook.
-            @param {Object} data contains dynamic object with a collection of keys and values from Dictionary.
-            @options data {Integer} id: Id of webhook to get details [Mandatory]
-        */
-
-        public async Task<JObject> GetWebhook(Dictionary<string, int> data)
-        {
-            var id = data["id"].ToString();
-            return await GetRequestAsync("webhook/" + id).ConfigureAwait(false);
-        }
-
-        /*
-            Create a Webhook.
-            @param {Object} data contains dynamic object with a collection of keys and values from Dictionary.
-            @options data {String} url: URL that will be triggered by a webhook [Mandatory]
-            @options data {String} description: Webook description [Optional]
-            @options data {Array} events: Set of events. You can use commas to separate multiple events. Possible values for Transcational webhook – request, delivered, hard_bounce, soft_bounce, blocked, spam, invalid_email, deferred, click, & opened and Possible Values for Marketing webhook – spam, opened, click, hard_bounce, unsubscribe, soft_bounce & list_addition ( case sensitive ) [Mandatory]
-            @options data {Integer} is_plat: Flag to create webhook type. Possible values – 0 (default) & 1. Example: to create Transactional webhooks, use $is_plat=0, & to create Marketing webhooks, use $is_plat=1 [Optional]
-        */
-
-        public async Task<JObject> CreateWebhook(object data)
-        {
-            return await PostRequestAsync("webhook", JsonConvert.SerializeObject(data)).ConfigureAwait(false);
-        }
-
-        /*
-            Delete a webhook.
-            @param {Object} data contains dynamic object with a collection of keys and values from Dictionary.
-            @options data {Integer} id: Id of webhook to be deleted [Mandatory]
-        */
-
-        public async Task<JObject> DeleteWebhook(Dictionary<string, int> data)
-        {
-            var id = data["id"].ToString();
-            return await DeleteRequestAsync("webhook/" + id).ConfigureAwait(false);
-        }
-
-        /*
-            Update a webhook.
-            @param {Object} data contains dynamic object with a collection of keys and values from Dictionary.
-            @options data {Integer} id: Id of webhook to be modified [Mandatory]
-            @options data {String} url: URL that will be triggered by a webhook [Mandatory]
-            @options data {String} description: Webook description [Optional]
-            @options data {Array} events: Set of events. You can use commas to separate multiple events. Possible values for Transcational webhook – request, delivered, hard_bounce, soft_bounce, blocked, spam, invalid_email, deferred, click, & opened and Possible Values for Marketing webhook – spam, opened, click, hard_bounce, unsubscribe, soft_bounce & list_addition ( case sensitive ) [Mandatory]
-        */
-
-        public async Task<JObject> UpdateWebhook(Dictionary<string, object> data)
-        {
-            var id = data["id"].ToString();
-            return await PutRequestAsync("webhook/" + id, JsonConvert.SerializeObject(data)).ConfigureAwait(false);
-        }
-
-        /*
-            Aggregate / date-wise report of the SendinBlue SMTP account.
-            @param {Object} data contains dynamic object with a collection of keys and values from Dictionary.
-            @options data {Integer} aggregate: This is used to indicate, you are interested in all-time totals. Possible values – 0 & 1. aggregate = 0 means it will not aggregate records, and will show stats per day/date wise [Optional]
-            @options data {String} start_date: The start date to look up statistics. Date must be in YYYY-MM-DD format and should be before the end_date [Optional]
-            @options data {String} end_date: The end date to look up statistics. Date must be in YYYY-MM-DD format and should be after the start_date [Optional]
-            @options data {Integer} days: Number of days in the past to include statistics ( Includes today ). It must be an integer greater than 0 [Optional]
-            @options data {String} tag: The tag you will specify to retrieve detailed stats. It must be an existing tag that has statistics [Optional]
-        */
-
-        public async Task<JObject> GetStatistics(object data)
-        {
-            return await PostRequestAsync("statistics", JsonConvert.SerializeObject(data)).ConfigureAwait(false);
-        }
+        #region Campaign > User
 
         /*
             Get Access a specific user Information.
             @param {Object} data contains dynamic object with a collection of keys and values from Dictionary.
             @options data {String} email: Email address of the already existing user in the SendinBlue contacts [Mandatory]
         */
-
         public async Task<JObject> GetUser(Dictionary<string, string> data)
         {
             var email = data["email"];
@@ -614,7 +500,6 @@ namespace mailinblue
             @param {Object} data contains dynamic object with a collection of keys and values from Dictionary.
             @options data {String} email: Email address of the already existing user in the SendinBlue contacts to be unlinked from all lists [Mandatory]
         */
-
         public async Task<JObject> DeleteUser(Dictionary<string, string> data)
         {
             var email = data["email"];
@@ -631,7 +516,6 @@ namespace mailinblue
             @options data {Array} listid_unlink: The list id(s) to be unlinked from user [Optional]
             @options data {Array} blacklisted_sms: This is used to blacklist/ Unblacklist a user’s SMS number. Possible values – 0 & 1. blacklisted_sms = 1 means user’s SMS number has been blacklisted [Optional]
         */
-
         public async Task<JObject> CreateUpdateUser(object data)
         {
             return await PutRequestAsync("user/createdituser", JsonConvert.SerializeObject(data)).ConfigureAwait(false);
@@ -647,7 +531,6 @@ namespace mailinblue
             @options data {String} name: This is new list name which will be created first & then users will be imported in it [Mandatory: if listids is empty]
             @options data {Integer} list_parent: This is the existing folder id & can be used with name parameter to make newly created list’s desired parent [Optional]
         */
-
         public async Task<JObject> ImportUsers(object data)
         {
             return await PostRequestAsync("user/import", JsonConvert.SerializeObject(data)).ConfigureAwait(false);
@@ -660,17 +543,19 @@ namespace mailinblue
             @options data {String} filter: Filter can be added to export users. Example: "{\"blacklisted\":1}", will export all blacklisted users [Mandatory]
             @options data {String} notify_url: URL that will be called once the export process is finished [Optional]
         */
-
         public async Task<JObject> ExportUsers(object data)
         {
             return await PostRequestAsync("user/export", JsonConvert.SerializeObject(data)).ConfigureAwait(false);
         }
 
+        #endregion // Campaign > User
+
+        #region Campaign > Attribute
+
         /*
             Access all the attributes information under the account.
             No input required
         */
-
         public async Task<JObject> GetAttributes()
         {
             return await GetRequestAsync("attribute").ConfigureAwait(false);
@@ -681,7 +566,6 @@ namespace mailinblue
             @param {Object} data contains dynamic object with a collection of keys and values from Dictionary.
             @options data {String} type: Type of attribute. Possible values – normal, transactional, category, calculated & global [Optional]
         */
-
         public async Task<JObject> GetAttribute(Dictionary<string, string> data)
         {
             var type = data["type"];
@@ -695,7 +579,6 @@ namespace mailinblue
             @options data {Array} data: The name and data type of ‘normal’ & ‘transactional’ attribute to be created in your SendinBlue account. It should be sent as an associative array. Example: array(‘ATTRIBUTE_NAME1′ => ‘DATA_TYPE1′, ‘ATTRIBUTE_NAME2’=> ‘DATA_TYPE2′).
             The name and data value of ‘category’, ‘calculated’ & ‘global’, should be sent as JSON string. Example: ‘[{ "name":"ATTRIBUTE_NAME1", "value":"Attribute_value1" }, { "name":"ATTRIBUTE_NAME2", "value":"Attribute_value2" }]’. You can use commas to separate multiple attributes [Mandatory]
         */
-
         public async Task<JObject> CreateAttribute(object data)
         {
             return await PostRequestAsync("attribute", JsonConvert.SerializeObject(data)).ConfigureAwait(false);
@@ -706,13 +589,206 @@ namespace mailinblue
             @param {Object} data contains dynamic object with a collection of keys and values from Dictionary.
             @options data {Integer} type: Type of attribute to be deleted [Mandatory]
         */
-
         public async Task<JObject> DeleteAttribute(Dictionary<string, object> data)
         {
             var type = data["type"].ToString();
             return await PostRequestAsync("attribute/" + type, JsonConvert.SerializeObject(data)).ConfigureAwait(false);
         }
 
+        #endregion // Campaign > Attribute
+
+        #region Campaign > Folder
+
+        /*
+            Get all folders detail.
+            @param {Object} data contains dynamic object with a collection of keys and values from Dictionary.
+            @options data {Integer} page: Maximum number of records per request is 50, if there are more than 50 folders then you can use this parameter to get next 50 results [Mandatory]
+            @options data {Integer} page_limit: This should be a valid number between 1-50 [Mandatory]
+        */
+        public async Task<JObject> GetFolders(Dictionary<string, int> data)
+        {
+            var page = data["page"].ToString();
+            var pageLimit = data["page_limit"].ToString();
+            var url = "page/" + page + "/page_limit/" + pageLimit;
+            return await GetRequestAsync("folder/index/" + url).ConfigureAwait(false);
+        }
+
+        /*
+            Get a particular folder detail.
+            @param {Object} data contains dynamic object with a collection of keys and values from Dictionary.
+            @options data {Integer} id: Id of folder to get details [Mandatory]
+        */
+        public async Task<JObject> GetFolder(Dictionary<string, int> data)
+        {
+            var id = data["id"].ToString();
+            return await GetRequestAsync("folder/" + id).ConfigureAwait(false);
+        }
+
+        /*
+            Create a new folder.
+            @param {Object} data contains dynamic object with a collection of keys and values from Dictionary.
+            @options data {String} name: Desired name of the folder to be created [Mandatory]
+        */
+        public async Task<JObject> CreateFolder(object data)
+        {
+            return await PostRequestAsync("folder", JsonConvert.SerializeObject(data)).ConfigureAwait(false);
+        }
+
+        /*
+            Delete a specific folder information.
+            @param {Object} data contains dynamic object with a collection of keys and values from Dictionary.
+            @options data {Integer} id: Id of folder to be deleted [Mandatory]
+        */
+        public async Task<JObject> DeleteFolder(Dictionary<string, int> data)
+        {
+            var id = data["id"].ToString();
+            return await DeleteRequestAsync("folder/" + id).ConfigureAwait(false);
+        }
+
+        /*
+            Update an existing folder.
+            @param {Object} data contains dynamic object with a collection of keys and values from Dictionary.
+            @options data {Integer} id: Id of folder to be modified [Mandatory]
+            @options data {String} name: Desired name of the folder to be modified [Mandatory]
+        */
+        public async Task<JObject> UpdateFolder(Dictionary<string, object> data)
+        {
+            var id = data["id"].ToString();
+            return await PutRequestAsync("folder/" + id, JsonConvert.SerializeObject(data)).ConfigureAwait(false);
+        }
+
+        #endregion // Campaign > Folder
+
+        #region Campaign > Sender
+
+        /*
+            Create your Senders.
+            @param {Object} data contains dynamic object with a collection of keys and values from Dictionary.
+            @options data {String} name: Name of the sender [Mandatory]
+            @options data {String} email: Email address of the sender [Mandatory]
+            @options data {Array} ip_domain: Pass pipe ( | ) separated Dedicated IP and its associated Domain. Example: "1.2.3.4|mydomain.com". You can use commas to separate multiple ip_domain’s [Mandatory: Only for Dedicated IP clients, for Shared IP clients, it should be kept blank]
+        */
+        public async Task<JObject> CreateSender(object data)
+        {
+            return await PostRequestAsync("advanced", JsonConvert.SerializeObject(data)).ConfigureAwait(false);
+        }
+
+        /*
+            Delete your Sender Information.
+            @param {Object} data contains dynamic object with a collection of keys and values from Dictionary.
+            @options data {Integer} id: Id of sender to be deleted [Mandatory]
+        */
+        public async Task<JObject> DeleteSender(Dictionary<string, int> data)
+        {
+            var id = data["id"].ToString();
+            return await DeleteRequestAsync("advanced/" + id).ConfigureAwait(false);
+        }
+
+        /*
+            Update your Senders.
+            @param {Object} data contains dynamic object with a collection of keys and values from Dictionary.
+            @options data {Integer} id: Id of sender to be modified [Mandatory]
+            @options data {String} name: Name of the sender [Mandatory]
+            @options data {Array} ip_domain: Pass pipe ( | ) separated Dedicated IP and its associated Domain. Example: "1.2.3.4|mydomain.com". You can use commas to separate multiple ip_domain’s [Mandatory: Only for Dedicated IP clients, for Shared IP clients, it should be kept blank]
+        */
+        public async Task<JObject> UpdateSender(Dictionary<string, object> data)
+        {
+            var id = data["id"].ToString();
+            return await PutRequestAsync("advanced/" + id, JsonConvert.SerializeObject(data)).ConfigureAwait(false);
+        }
+
+        /*
+            Get Access of created senders information.
+            @param {Object} data contains dynamic object with a collection of keys and values from Dictionary.
+            @options data {String} option: Options to get senders. Possible options – IP-wise, & Domain-wise ( only for dedicated IP clients ). Example: to get senders with specific IP, use $option=’1.2.3.4′, to get senders with specific domain use, $option=’domain.com’, & to get all senders, use $option="" [Optional]
+        */
+        public async Task<JObject> GetSenders(Dictionary<string, string> data)
+        {
+            var option = data["option"];
+            return await GetRequestAsync("advanced/index/option/" + option).ConfigureAwait(false);
+        }
+
+        #endregion // Campaign > Sender
+
+        #region Webhooks
+
+        /*
+            To retrieve details of all webhooks.
+            @param {Object} data contains dynamic object with a collection of keys and values from Dictionary.
+            @options data {String} is_plat: Flag to get webhooks. Possible values – 0 & 1. Example: to get Transactional webhooks, use $is_plat=0, to get Marketing webhooks, use $is_plat=1, & to get all webhooks, use $is_plat="" [Optional]
+        */
+        public async Task<JObject> GetWebhooks(Dictionary<string, string> data)
+        {
+            var isPlat = data["is_plat"];
+            return await GetRequestAsync("webhook/index/is_plat/" + isPlat).ConfigureAwait(false);
+        }
+
+        /*
+            To retrieve details of any particular webhook.
+            @param {Object} data contains dynamic object with a collection of keys and values from Dictionary.
+            @options data {Integer} id: Id of webhook to get details [Mandatory]
+        */
+        public async Task<JObject> GetWebhook(Dictionary<string, int> data)
+        {
+            var id = data["id"].ToString();
+            return await GetRequestAsync("webhook/" + id).ConfigureAwait(false);
+        }
+
+        /*
+            Create a Webhook.
+            @param {Object} data contains dynamic object with a collection of keys and values from Dictionary.
+            @options data {String} url: URL that will be triggered by a webhook [Mandatory]
+            @options data {String} description: Webook description [Optional]
+            @options data {Array} events: Set of events. You can use commas to separate multiple events. Possible values for Transcational webhook – request, delivered, hard_bounce, soft_bounce, blocked, spam, invalid_email, deferred, click, & opened and Possible Values for Marketing webhook – spam, opened, click, hard_bounce, unsubscribe, soft_bounce & list_addition ( case sensitive ) [Mandatory]
+            @options data {Integer} is_plat: Flag to create webhook type. Possible values – 0 (default) & 1. Example: to create Transactional webhooks, use $is_plat=0, & to create Marketing webhooks, use $is_plat=1 [Optional]
+        */
+        public async Task<JObject> CreateWebhook(object data)
+        {
+            return await PostRequestAsync("webhook", JsonConvert.SerializeObject(data)).ConfigureAwait(false);
+        }
+
+        /*
+            Delete a webhook.
+            @param {Object} data contains dynamic object with a collection of keys and values from Dictionary.
+            @options data {Integer} id: Id of webhook to be deleted [Mandatory]
+        */
+        public async Task<JObject> DeleteWebhook(Dictionary<string, int> data)
+        {
+            var id = data["id"].ToString();
+            return await DeleteRequestAsync("webhook/" + id).ConfigureAwait(false);
+        }
+
+        /*
+            Update a webhook.
+            @param {Object} data contains dynamic object with a collection of keys and values from Dictionary.
+            @options data {Integer} id: Id of webhook to be modified [Mandatory]
+            @options data {String} url: URL that will be triggered by a webhook [Mandatory]
+            @options data {String} description: Webook description [Optional]
+            @options data {Array} events: Set of events. You can use commas to separate multiple events. Possible values for Transcational webhook – request, delivered, hard_bounce, soft_bounce, blocked, spam, invalid_email, deferred, click, & opened and Possible Values for Marketing webhook – spam, opened, click, hard_bounce, unsubscribe, soft_bounce & list_addition ( case sensitive ) [Mandatory]
+        */
+        public async Task<JObject> UpdateWebhook(Dictionary<string, object> data)
+        {
+            var id = data["id"].ToString();
+            return await PutRequestAsync("webhook/" + id, JsonConvert.SerializeObject(data)).ConfigureAwait(false);
+        }
+
+        #endregion // Webhooks
+
+        #region Stats
+
+        /*
+            Aggregate / date-wise report of the SendinBlue SMTP account.
+            @param {Object} data contains dynamic object with a collection of keys and values from Dictionary.
+            @options data {Integer} aggregate: This is used to indicate, you are interested in all-time totals. Possible values – 0 & 1. aggregate = 0 means it will not aggregate records, and will show stats per day/date wise [Optional]
+            @options data {String} start_date: The start date to look up statistics. Date must be in YYYY-MM-DD format and should be before the end_date [Optional]
+            @options data {String} end_date: The end date to look up statistics. Date must be in YYYY-MM-DD format and should be after the start_date [Optional]
+            @options data {Integer} days: Number of days in the past to include statistics ( Includes today ). It must be an integer greater than 0 [Optional]
+            @options data {String} tag: The tag you will specify to retrieve detailed stats. It must be an existing tag that has statistics [Optional]
+        */
+        public async Task<JObject> GetStatistics(object data)
+        {
+            return await PostRequestAsync("statistics", JsonConvert.SerializeObject(data)).ConfigureAwait(false);
+        }
 
         /*
             Get Email Event report.
@@ -728,74 +804,14 @@ namespace mailinblue
             @options data {Array} tags: The existing tags you will specify to search report for [Optional]
 
         */
-
         public async Task<JObject> GetReport(object data)
         {
             return await PostRequestAsync("report", JsonConvert.SerializeObject(data)).ConfigureAwait(false);
         }
 
-        /*
-            Get all folders detail.
-            @param {Object} data contains dynamic object with a collection of keys and values from Dictionary.
-            @options data {Integer} page: Maximum number of records per request is 50, if there are more than 50 folders then you can use this parameter to get next 50 results [Mandatory]
-            @options data {Integer} page_limit: This should be a valid number between 1-50 [Mandatory]
-        */
+        #endregion // Stats
 
-        public async Task<JObject> GetFolders(Dictionary<string, int> data)
-        {
-            var page = data["page"].ToString();
-            var pageLimit = data["page_limit"].ToString();
-            var url = "page/" + page + "/page_limit/" + pageLimit;
-            return await GetRequestAsync("folder/index/" + url).ConfigureAwait(false);
-        }
-
-        /*
-            Get a particular folder detail.
-            @param {Object} data contains dynamic object with a collection of keys and values from Dictionary.
-            @options data {Integer} id: Id of folder to get details [Mandatory]
-        */
-
-        public async Task<JObject> GetFolder(Dictionary<string, int> data)
-        {
-            var id = data["id"].ToString();
-            return await GetRequestAsync("folder/" + id).ConfigureAwait(false);
-        }
-
-        /*
-            Create a new folder.
-            @param {Object} data contains dynamic object with a collection of keys and values from Dictionary.
-            @options data {String} name: Desired name of the folder to be created [Mandatory]
-        */
-
-        public async Task<JObject> CreateFolder(object data)
-        {
-            return await PostRequestAsync("folder", JsonConvert.SerializeObject(data)).ConfigureAwait(false);
-        }
-
-        /*
-            Delete a specific folder information.
-            @param {Object} data contains dynamic object with a collection of keys and values from Dictionary.
-            @options data {Integer} id: Id of folder to be deleted [Mandatory]
-        */
-
-        public async Task<JObject> DeleteFolder(Dictionary<string, int> data)
-        {
-            var id = data["id"].ToString();
-            return await DeleteRequestAsync("folder/" + id).ConfigureAwait(false);
-        }
-
-        /*
-            Update an existing folder.
-            @param {Object} data contains dynamic object with a collection of keys and values from Dictionary.
-            @options data {Integer} id: Id of folder to be modified [Mandatory]
-            @options data {String} name: Desired name of the folder to be modified [Mandatory]
-        */
-
-        public async Task<JObject> UpdateFolder(Dictionary<string, object> data)
-        {
-            var id = data["id"].ToString();
-            return await PutRequestAsync("folder/" + id, JsonConvert.SerializeObject(data)).ConfigureAwait(false);
-        }
+        #region SMTP > Bounces
 
         /*
             Delete any hardbounce, which actually would have been blocked due to some temporary ISP failures.
@@ -804,10 +820,33 @@ namespace mailinblue
             @options data {String} end_date: The end date to get report till date. Date must be in YYYY-MM-DD format and should be after the start_date [Optional]
             @options data {String} email: Email address to delete its bounces [Optional]
         */
-
         public async Task<JObject> DeleteBounces(object data)
         {
             return await PostRequestAsync("bounces", JsonConvert.SerializeObject(data)).ConfigureAwait(false);
+        }
+
+        #endregion // SMTP > Bounces
+
+        #region SMTP > Transactional
+
+        /*
+            Send Transactional Email.
+            @param {Object} data contains dynamic object with a collection of keys and values from Dictionary.
+            @options data {Array} to: Email address of the recipient(s). It should be sent as an associative array. Example: array("to@example.net"=>"to whom"). You can use commas to separate multiple recipients [Mandatory]
+            @options data {String} subject: Message subject [Mandatory]
+            @options data {Array} from Email address for From header. It should be sent as an array. Example: array("from@email.com","from email") [Mandatory]
+            @options data {String} html: Body of the message. (HTML version) [Mandatory]. To send inline images, use <img src="{YourFileName.Extension}" alt="image" border="0" >, the 'src' attribute value inside {} (curly braces) should be same as the filename used in 'inline_image' parameter
+            @options data {String} text: Body of the message. (text version) [Optional]
+            @options data {Array} cc: Same as to but for Cc. Example: array("cc@example.net","cc whom") [Optional]
+            @options data {Array} bcc: Same as to but for Bcc. Example: array("bcc@example.net","bcc whom") [Optional]
+            @options data {Array} replyto: Same as from but for Reply To. Example: array("from@email.com","from email") [Optional]
+            @options data {Array} attachment: Provide the absolute url of the attachment/s. Possible extension values = gif, png, bmp, cgm, jpg, jpeg, txt, css, shtml, html, htm, csv, zip, pdf, xml, doc, xls, ppt, tar and ez. To send attachment/s generated on the fly you have to pass your attachment/s filename & its base64 encoded chunk data as an associative array. Example: array("YourFileName.Extension"=>"Base64EncodedChunkData"). You can use commas to separate multiple attachments [Optional]
+            @options data {Array} headers: The headers will be sent along with the mail headers in original email. Example: array("Content-Type"=>"text/html; charset=iso-8859-1"). You can use commas to separate multiple headers [Optional]
+            @options data {Array} inline_image: Pass your inline image/s filename & its base64 encoded chunk data as an associative array. Possible extension values = gif, png, bmp, cgm, jpg and jpeg. Example: array("YourFileName.Extension"=>"Base64EncodedChunkData"). You can use commas to separate multiple inline images [Optional]
+        */
+        public async Task<JObject> SendEmail(object data)
+        {
+            return await PostRequestAsync("email", JsonConvert.SerializeObject(data)).ConfigureAwait(false);
         }
 
         /*
@@ -822,64 +861,15 @@ namespace mailinblue
             @options data {Array} attachment: To send attachment/s generated on the fly you have to pass your attachment/s filename & its base64 encoded chunk data as an associative array [Optional]
             @options data {Array} headers: The headers will be sent along with the mail headers in original email. Example: array("Content-Type"=>"text/html; charset=iso-8859-1"). You can use commas to separate multiple headers [Optional]
         */
-
         public async Task<JObject> SendTransactionalTemplate(Dictionary<string, object> data)
         {
             var id = data["id"].ToString();
             return await PutRequestAsync("template/" + id, JsonConvert.SerializeObject(data)).ConfigureAwait(false);
         }
 
-        /*
-            Create your Senders.
-            @param {Object} data contains dynamic object with a collection of keys and values from Dictionary.
-            @options data {String} name: Name of the sender [Mandatory]
-            @options data {String} email: Email address of the sender [Mandatory]
-            @options data {Array} ip_domain: Pass pipe ( | ) separated Dedicated IP and its associated Domain. Example: "1.2.3.4|mydomain.com". You can use commas to separate multiple ip_domain’s [Mandatory: Only for Dedicated IP clients, for Shared IP clients, it should be kept blank]
-        */
+        #endregion // SMTP > Transactional
 
-        public async Task<JObject> CreateSender(object data)
-        {
-            return await PostRequestAsync("advanced", JsonConvert.SerializeObject(data)).ConfigureAwait(false);
-        }
-
-        /*
-            Delete your Sender Information.
-            @param {Object} data contains dynamic object with a collection of keys and values from Dictionary.
-            @options data {Integer} id: Id of sender to be deleted [Mandatory]
-        */
-
-        public async Task<JObject> DeleteSender(Dictionary<string, int> data)
-        {
-            var id = data["id"].ToString();
-            return await DeleteRequestAsync("advanced/" + id).ConfigureAwait(false);
-        }
-
-        /*
-            Update your Senders.
-            @param {Object} data contains dynamic object with a collection of keys and values from Dictionary.
-            @options data {Integer} id: Id of sender to be modified [Mandatory]
-            @options data {String} name: Name of the sender [Mandatory]
-            @options data {Array} ip_domain: Pass pipe ( | ) separated Dedicated IP and its associated Domain. Example: "1.2.3.4|mydomain.com". You can use commas to separate multiple ip_domain’s [Mandatory: Only for Dedicated IP clients, for Shared IP clients, it should be kept blank]
-        */
-
-        public async Task<JObject> UpdateSender(Dictionary<string, object> data)
-        {
-            var id = data["id"].ToString();
-            return await PutRequestAsync("advanced/" + id, JsonConvert.SerializeObject(data)).ConfigureAwait(false);
-        }
-
-        /*
-            Get Access of created senders information.
-            @param {Object} data contains dynamic object with a collection of keys and values from Dictionary.
-            @options data {String} option: Options to get senders. Possible options – IP-wise, & Domain-wise ( only for dedicated IP clients ). Example: to get senders with specific IP, use $option=’1.2.3.4′, to get senders with specific domain use, $option=’domain.com’, & to get all senders, use $option="" [Optional]
-        */
-
-        public async Task<JObject> GetSenders(Dictionary<string, string> data)
-        {
-            var option = data["option"];
-            return await GetRequestAsync("advanced/index/option/" + option).ConfigureAwait(false);
-        }
-
+        #region SMS
 
         /*
             Send a Test SMS.
@@ -887,7 +877,6 @@ namespace mailinblue
             @options data {Integer} id: Id of the SMS campaign [Mandatory]
             @options data {String} to: Mobile number with the country code to send test SMS. The mobile number defined here should belong to one of your contacts in SendinBlue account and should not be blacklisted [Mandatory]
         */
-
         public async Task<JObject> SendBatSms(Dictionary<string, object> data)
         {
             var id = data["id"].ToString();
@@ -906,7 +895,6 @@ namespace mailinblue
             @options data {String} tag: The tag that you can associate with the message [Optional]
             @options data {String} type: Type of message. Possible values – marketing (default) & transactional. You can use marketing for sending marketing SMS, & for sending transactional SMS, use transactional type [Optional]
         */
-
         public async Task<JObject> SendSms(object data)
         {
             return await PostRequestAsync("sms", JsonConvert.SerializeObject(data)).ConfigureAwait(false);
@@ -924,7 +912,6 @@ namespace mailinblue
             @options data {String} scheduled_date: The day on which the SMS campaign is supposed to run [Optional]
             @options data {Integer} send_now: Flag to send campaign now. Possible values = 0 (default) & 1. send_now = 0 means campaign can’t be send now, & send_now = 1 means campaign ready to send now [Optional]
         */
-
         public async Task<JObject> CreateSmsCampaign(object data)
         {
             return await PostRequestAsync("sms", JsonConvert.SerializeObject(data)).ConfigureAwait(false);
@@ -943,12 +930,15 @@ namespace mailinblue
             @options data {String} scheduled_date: The day on which the SMS campaign is supposed to run [Optional]
             @options data {Integer} send_now: Flag to send campaign now. Possible values = 0 (default) & 1. send_now = 0 means campaign can’t be send now, & send_now = 1 means campaign ready to send now [Optional]
         */
-
         public async Task<JObject> UpdateSmsCampaign(Dictionary<string, object> data)
         {
             var id = data["id"].ToString();
             return await PutRequestAsync("sms/" + id, JsonConvert.SerializeObject(data)).ConfigureAwait(false);
         }
+
+        #endregion // SMS
+
+        #region Template
 
         /*
             Create a Template.
@@ -965,7 +955,6 @@ namespace mailinblue
             @options data {Integer} status: Status of template. Possible values = 0 (default) & 1. status = 0 means template is inactive, & status = 1 means template is active [Optional]
             @options data {Integer} attachment: Status of attachment. Possible values = 0 (default) & 1. attach = 0 means an attachment can’t be sent, & attach = 1 means an attachment can be sent, in the email [Optional]
         */
-
         public async Task<JObject> CreateTemplate(object data)
         {
             return await PostRequestAsync("template", JsonConvert.SerializeObject(data)).ConfigureAwait(false);
@@ -987,12 +976,15 @@ namespace mailinblue
             @options data {Integer} status: Status of template. Possible values = 0 (default) & 1. status = 0 means template is inactive, & status = 1 means template is active [Optional]
             @options data {Integer} attachment: Status of attachment. Possible values = 0 (default) & 1. attach = 0 means an attachment can’t be sent, & attach = 1 means an attachment can be sent, in the email [Optional]
         */
-
         public async Task<JObject> UpdateTemplate(Dictionary<string, object> data)
         {
             var id = data["id"].ToString();
             return await PostRequestAsync("template/" + id, JsonConvert.SerializeObject(data)).ConfigureAwait(false);
         }
+
+        #endregion // Template
+
+        #region Calls
 
         async Task<JObject> AuthCallAsync(string resource, string method, string content = null)
         {
@@ -1072,5 +1064,7 @@ namespace mailinblue
         {
             return await AuthCallAsync(resource, "PUT", content).ConfigureAwait(false);
         }
+
+        #endregion // Calls
     }
 }
