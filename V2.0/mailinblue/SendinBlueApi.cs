@@ -13,19 +13,21 @@ namespace mailinblue
     public class SendinBlueApi : ISendinBlueApi
     {
         const string BaseUrl = "https://api.sendinblue.com/v2.0/";
+        const string ContentType = "application/json";
+        const int DefaultTimeout = 30000; // default timeout: 30 secs
+
         readonly string _accessId;
         readonly int _timeout;
 
         public SendinBlueApi(string accessId)
+            : this(accessId, DefaultTimeout)
         {
-            _accessId = accessId;
-            this._timeout = 30000; //default timeout: 30 secs
         }
 
         public SendinBlueApi(string accessId, int timeout)
         {
             _accessId = accessId;
-            this._timeout = timeout;
+            _timeout = timeout;
         }
 
         /*
@@ -996,23 +998,16 @@ namespace mailinblue
         {
             Stream stream;
             var url = BaseUrl + resource;
-            const string contentType = "application/json";
-            // Create request
 
+            // check timeout
+            if (_timeout <= 0 || _timeout > 60000)
+                throw new ArgumentException("value not allowed for timeout", "timeout");
+
+            // Create request
             var request = WebRequest.Create(url);
-            try
-            {
-                if (_timeout != null && (_timeout <= 0 || _timeout > 60000)) {
-                    throw new Exception("value not allowed for timeout");
-                } 
-            }
-            catch (System.Net.WebException ex)
-            {
-                stream = ex.Response.GetResponseStream() as Stream;
-            }
             // Set method
             request.Method = method;
-            request.ContentType = contentType;
+            request.ContentType = ContentType;
             request.Timeout = _timeout;
             request.Headers.Add("api-key", _accessId);
 
