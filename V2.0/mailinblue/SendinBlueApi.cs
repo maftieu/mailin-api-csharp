@@ -37,7 +37,7 @@ namespace mailinblue
 
         public async Task<JObject> GetAccount()
         {
-            return await GetRequestAsync("account", "").ConfigureAwait(false);
+            return await GetRequestAsync("account").ConfigureAwait(false);
         }
 
         /*
@@ -47,7 +47,7 @@ namespace mailinblue
 
         public async Task<JObject> GetSmtpDetails()
         {
-            return await GetRequestAsync("account/smtpdetail", "").ConfigureAwait(false);
+            return await GetRequestAsync("account/smtpdetail").ConfigureAwait(false);
         }
 
         /*
@@ -87,7 +87,7 @@ namespace mailinblue
         public async Task<JObject> DeleteChildAccount(Dictionary<string, string> data)
         {
             var childAuthkey = data["auth_key"];
-            return await DeleteRequestAsync("account/" + childAuthkey, "").ConfigureAwait(false);
+            return await DeleteRequestAsync("account/" + childAuthkey).ConfigureAwait(false);
         }
 
         /*
@@ -150,7 +150,7 @@ namespace mailinblue
             {
                 url = "campaign/detailsv2/type/" + type + "/status/" + status + "/page/" + page + "/page_limit/" + pageLimit + "/";
             }
-            return await GetRequestAsync(url, "").ConfigureAwait(false);
+            return await GetRequestAsync(url).ConfigureAwait(false);
         }
 
         /*
@@ -162,7 +162,7 @@ namespace mailinblue
         public async Task<JObject> GetCampaignV2(Dictionary<string, int> data)
         {
             var id = data["id"].ToString();
-            return await GetRequestAsync("campaign/" + id + "/detailsv2/", "").ConfigureAwait(false);
+            return await GetRequestAsync("campaign/" + id + "/detailsv2/").ConfigureAwait(false);
         }
 
         /*
@@ -201,7 +201,7 @@ namespace mailinblue
         public async Task<JObject> DeleteCampaign(Dictionary<string, int> data)
         {
             var id = data["id"].ToString();
-            return await DeleteRequestAsync("campaign/" + id, "").ConfigureAwait(false);
+            return await DeleteRequestAsync("campaign/" + id).ConfigureAwait(false);
         }
 
         /*
@@ -373,7 +373,7 @@ namespace mailinblue
             var page = data["page"].ToString();
             var pageLimit = data["page_limit"].ToString();
             var url = "page/" + page + "/page_limit/" + pageLimit;
-            return await GetRequestAsync("process/index/" + url, "").ConfigureAwait(false);
+            return await GetRequestAsync("process/index/" + url).ConfigureAwait(false);
         }
 
         /*
@@ -385,7 +385,7 @@ namespace mailinblue
         public async Task<JObject> GetProcess(Dictionary<string, int> data)
         {
             var id = data["id"].ToString();
-            return await GetRequestAsync("process/" + id, "").ConfigureAwait(false);
+            return await GetRequestAsync("process/" + id).ConfigureAwait(false);
         }
 
         /*
@@ -402,7 +402,7 @@ namespace mailinblue
             var page = data["page"].ToString();
             var pageLimit = data["page_limit"].ToString();
             var url = "page/" + page + "/page_limit/" + pageLimit + "/list_parent/" + listParent;
-            return await GetRequestAsync("list/index/" + url, "").ConfigureAwait(false);
+            return await GetRequestAsync("list/index/" + url).ConfigureAwait(false);
         }
 
         /*
@@ -414,7 +414,7 @@ namespace mailinblue
         public async Task<JObject> GetList(Dictionary<string, int> data)
         {
             var id = data["id"].ToString();
-            return await GetRequestAsync("list/" + id, "").ConfigureAwait(false);
+            return await GetRequestAsync("list/" + id).ConfigureAwait(false);
         }
 
         /*
@@ -438,7 +438,7 @@ namespace mailinblue
         public async Task<JObject> DeleteList(Dictionary<string, int> data)
         {
             var id = data["id"].ToString();
-            return await DeleteRequestAsync("list/" + id, "").ConfigureAwait(false);
+            return await DeleteRequestAsync("list/" + id).ConfigureAwait(false);
         }
 
         /*
@@ -526,7 +526,7 @@ namespace mailinblue
         public async Task<JObject> GetWebhooks(Dictionary<string, string> data)
         {
             var isPlat = data["is_plat"];
-            return await GetRequestAsync("webhook/index/is_plat/" + isPlat, "").ConfigureAwait(false);
+            return await GetRequestAsync("webhook/index/is_plat/" + isPlat).ConfigureAwait(false);
         }
 
         /*
@@ -538,7 +538,7 @@ namespace mailinblue
         public async Task<JObject> GetWebhook(Dictionary<string, int> data)
         {
             var id = data["id"].ToString();
-            return await GetRequestAsync("webhook/" + id, "").ConfigureAwait(false);
+            return await GetRequestAsync("webhook/" + id).ConfigureAwait(false);
         }
 
         /*
@@ -564,7 +564,7 @@ namespace mailinblue
         public async Task<JObject> DeleteWebhook(Dictionary<string, int> data)
         {
             var id = data["id"].ToString();
-            return await DeleteRequestAsync("webhook/" + id, "").ConfigureAwait(false);
+            return await DeleteRequestAsync("webhook/" + id).ConfigureAwait(false);
         }
 
         /*
@@ -606,7 +606,7 @@ namespace mailinblue
         public async Task<JObject> GetUser(Dictionary<string, string> data)
         {
             var email = data["email"];
-            return await GetRequestAsync("user/" + email.Trim(), "").ConfigureAwait(false);
+            return await GetRequestAsync("user/" + email.Trim()).ConfigureAwait(false);
         }
 
         /*
@@ -618,7 +618,7 @@ namespace mailinblue
         public async Task<JObject> DeleteUser(Dictionary<string, string> data)
         {
             var email = data["email"];
-            return await DeleteRequestAsync("user/" + email.Trim(), "").ConfigureAwait(false);
+            return await DeleteRequestAsync("user/" + email.Trim()).ConfigureAwait(false);
         }
 
         /*
@@ -673,7 +673,7 @@ namespace mailinblue
 
         public async Task<JObject> GetAttributes()
         {
-            return await GetRequestAsync("attribute", "").ConfigureAwait(false);
+            return await GetRequestAsync("attribute").ConfigureAwait(false);
         }
 
         /*
@@ -685,7 +685,7 @@ namespace mailinblue
         public async Task<JObject> GetAttribute(Dictionary<string, string> data)
         {
             var type = data["type"];
-            return await GetRequestAsync("attribute/" + type, "").ConfigureAwait(false);
+            return await GetRequestAsync("attribute/" + type).ConfigureAwait(false);
         }
 
         /*
@@ -746,7 +746,7 @@ namespace mailinblue
             var page = data["page"].ToString();
             var pageLimit = data["page_limit"].ToString();
             var url = "page/" + page + "/page_limit/" + pageLimit;
-            return await GetRequestAsync("folder/index/" + url, "").ConfigureAwait(false);
+            return await GetRequestAsync("folder/index/" + url).ConfigureAwait(false);
         }
 
         /*
@@ -758,7 +758,7 @@ namespace mailinblue
         public async Task<JObject> GetFolder(Dictionary<string, int> data)
         {
             var id = data["id"].ToString();
-            return await GetRequestAsync("folder/" + id, "").ConfigureAwait(false);
+            return await GetRequestAsync("folder/" + id).ConfigureAwait(false);
         }
 
         /*
@@ -781,7 +781,7 @@ namespace mailinblue
         public async Task<JObject> DeleteFolder(Dictionary<string, int> data)
         {
             var id = data["id"].ToString();
-            return await DeleteRequestAsync("folder/" + id, "").ConfigureAwait(false);
+            return await DeleteRequestAsync("folder/" + id).ConfigureAwait(false);
         }
 
         /*
@@ -851,7 +851,7 @@ namespace mailinblue
         public async Task<JObject> DeleteSender(Dictionary<string, int> data)
         {
             var id = data["id"].ToString();
-            return await DeleteRequestAsync("advanced/" + id, "").ConfigureAwait(false);
+            return await DeleteRequestAsync("advanced/" + id).ConfigureAwait(false);
         }
 
         /*
@@ -877,7 +877,7 @@ namespace mailinblue
         public async Task<JObject> GetSenders(Dictionary<string, string> data)
         {
             var option = data["option"];
-            return await GetRequestAsync("advanced/index/option/" + option, "").ConfigureAwait(false);
+            return await GetRequestAsync("advanced/index/option/" + option).ConfigureAwait(false);
         }
 
 
@@ -893,7 +893,7 @@ namespace mailinblue
             var id = data["id"].ToString();
             var mobilephone = data["to"].ToString();
             var phone = HttpUtility.UrlEncode(mobilephone);
-            return await GetRequestAsync("sms/" + id + "/" + phone, "").ConfigureAwait(false);
+            return await GetRequestAsync("sms/" + id + "/" + phone).ConfigureAwait(false);
         }
 
         /*
@@ -994,7 +994,7 @@ namespace mailinblue
             return await PostRequestAsync("template/" + id, JsonConvert.SerializeObject(data)).ConfigureAwait(false);
         }
 
-        async Task<JObject> AuthCallAsync(string resource, string method, string content)
+        async Task<JObject> AuthCallAsync(string resource, string method, string content = null)
         {
             Stream stream;
             var url = BaseUrl + resource;
@@ -1011,7 +1011,7 @@ namespace mailinblue
             request.Timeout = _timeout;
             request.Headers.Add("api-key", _accessId);
 
-            if (method == "POST" || method == "PUT")
+            if (content != null)
             {
                 using (var s = await request.GetRequestStreamAsync().ConfigureAwait(false))
                 {
@@ -1053,9 +1053,9 @@ namespace mailinblue
             return JObject.Parse(responseString);
         }
 
-        async Task<JObject> GetRequestAsync(string resource, string content)
+        async Task<JObject> GetRequestAsync(string resource)
         {
-            return await AuthCallAsync(resource, "GET", "").ConfigureAwait(false);
+            return await AuthCallAsync(resource, "GET", null).ConfigureAwait(false);
         }
 
         async Task<JObject> PostRequestAsync(string resource, string content)
@@ -1063,9 +1063,9 @@ namespace mailinblue
             return await AuthCallAsync(resource, "POST", content).ConfigureAwait(false);
         }
 
-        async Task<JObject> DeleteRequestAsync(string resource, string content)
+        async Task<JObject> DeleteRequestAsync(string resource)
         {
-            return await AuthCallAsync(resource, "DELETE", "").ConfigureAwait(false);
+            return await AuthCallAsync(resource, "DELETE", null).ConfigureAwait(false);
         }
 
         async Task<JObject> PutRequestAsync(string resource, string content)
